@@ -14,10 +14,10 @@ dotenv.config();
 const app = express();
 
 
-
-const cors = require("cors");
+// Your CORS setup
+const CLIENT_URL = process.env.CLIENT_URL;
 app.use(cors({
-  origin: [CLIENT_URL], // frontend domain
+  origin: [CLIENT_URL],
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
