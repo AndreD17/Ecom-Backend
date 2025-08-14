@@ -12,6 +12,14 @@ const dotenv = require("dotenv");
 dotenv.config();
 const app = express();
 
+const cors = require("cors");
+app.use(cors({
+  origin: ["https://ecom-frontend-x5t8.onrender.com"], // frontend domain
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
+
+
 const PORT = process.env.PORT;
 const JWT_SECRET = process.env.JWT_SECRET;
 const MONGO_URI = process.env.MONGO_URI;
