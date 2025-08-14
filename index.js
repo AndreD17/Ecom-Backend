@@ -12,10 +12,10 @@ const dotenv = require("dotenv");
 dotenv.config();
 const app = express();
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT;
 const JWT_SECRET = process.env.JWT_SECRET;
 const MONGO_URI = process.env.MONGO_URI;
-const CLIENT_URL = process.env.CLIENT_URL || "http://localhost:3000";
+const CLIENT_URL = process.env.CLIENT_URL;
 
 // Middleware
 app.use(express.json());
@@ -24,6 +24,16 @@ app.use(cors({ origin: CLIENT_URL, credentials: true }));
 
 // Static folder for images
 app.use("/images", express.static(path.join(__dirname, "upload/images")));
+
+
+// MongoDB Connection
+mongoose
+  .connect(MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log("✅ MongoDB connected"))
+  .catch((err) => console.error("❌ MongoDB connection error:", err));
 
 
 // Multer Setup for Images
