@@ -8,13 +8,16 @@ const path = require("path");
 const cors = require("cors");
 const dotenv = require("dotenv");
 
+
 //Enviromental variables
 dotenv.config();
 const app = express();
 
+
+
 const cors = require("cors");
 app.use(cors({
-  origin: ["https://ecom-frontend-x5t8.onrender.com"], // frontend domain
+  origin: [CLIENT_URL], // frontend domain
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
@@ -23,7 +26,7 @@ app.use(cors({
 const PORT = process.env.PORT;
 const JWT_SECRET = process.env.JWT_SECRET;
 const MONGO_URI = process.env.MONGO_URI;
-const CLIENT_URL = process.env.CLIENT_URL;
+
 
 // Middleware
 app.use(express.json());
