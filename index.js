@@ -26,16 +26,6 @@ app.use(cors({ origin: CLIENT_URL, credentials: true }));
 app.use("/images", express.static(path.join(__dirname, "upload/images")));
 
 
-// MongoDB Connection
-mongoose
-  .connect(MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log("✅ MongoDB connected"))
-  .catch((err) => console.error("❌ MongoDB connection error:", err));
-
-
 // Multer Setup for Images
 const storage = multer.diskStorage({
   destination: "./upload/images",
