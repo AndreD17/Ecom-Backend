@@ -5,9 +5,8 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const multer = require("multer");
 const path = require("path");
+const cors = require("cors");
 const dotenv = require("dotenv");
-
-
 
 
 //Enviromental variables
@@ -15,13 +14,24 @@ dotenv.config();
 const app = express();
 
 
-// Serve React static files
-app.use(express.static(path.join(__dirname, "build")));
+// Your CORS setup
+const allowedOrigins = [
+  process.env.CLIENT_URL,               // your Render frontend
+  process.env.CLIENT_URL + "/",         // same but with trailing slash
+  "http://localhost:4000",              // local dev
+];
 
-// Serve React index.html for all other routes
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "build", "index.html"));
-});
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("CORS not allowed for this origin: " + origin));
+    }
+  },
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
 
 
 const PORT = process.env.PORT;
