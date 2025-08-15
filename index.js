@@ -15,9 +15,22 @@ const app = express();
 
 
 // Your CORS setup
-const CLIENT_URL = process.env.CLIENT_URL;
+const cors = require("cors");
+
+const allowedOrigins = [
+  process.env.CLIENT_URL,               // your Render frontend
+  process.env.CLIENT_URL + "/",         // same but with trailing slash
+  "http://localhost:4000",              // local dev
+];
+
 app.use(cors({
-  origin: [CLIENT_URL],
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("CORS not allowed for this origin: " + origin));
+    }
+  },
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
