@@ -14,23 +14,13 @@ const app = express();
 
 
 // Your CORS setup
-const allowedOrigins = [
-  process.env.CLIENT_URL,               // your Render frontend
-  process.env.CLIENT_URL + "/",         // same but with trailing slash
-  "http://localhost:4000",              // local dev
-];
+const cors = require("cors");
 
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("CORS not allowed for this origin: " + origin));
-    }
-  },
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  origin: "https://ecom-frontend-x5t8.onrender.com",  // your frontend Render URL
   credentials: true
 }));
+
 
 
 const PORT = process.env.PORT;
